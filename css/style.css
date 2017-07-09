@@ -27,3 +27,8 @@ and open the template in the editor.
 .main-content{
     padding: 15px;
 }
+.selected, .selected a{
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}

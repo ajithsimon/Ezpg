@@ -22,6 +22,7 @@ $(document).ready(function(){
 		            makeMenu(item)
 		        );
 		    });
+		    $menu.children('li').first().addClass('selected').trigger('click');
     	}
     });
 });
@@ -30,7 +31,9 @@ $(document).on('click', '.mainLink, .subLinks', function(e){
 	if (typeof $(this).children('a').data('content') === 'undefined') {
 		return false;
 	}
-	var contentUrl = './js/'+$(this).children('a').data('content');
+	$('.mainLink, .subLinks').removeClass('selected');
+	var $element = $(this);
+	var contentUrl = './js/'+$element.children('a').data('content');
 	$.ajax({
 		url: contentUrl,
 		dataType: 'json',
@@ -43,6 +46,7 @@ $(document).on('click', '.mainLink, .subLinks', function(e){
 				content += "<div class='notes' style='margin-top:10px;'>*"+data.notes.replace(/\n/g, "<br />")+"</div>";
 			}
 			$("#content").html(content);
+			$element.addClass('selected');
 		}
 	});
 });
@@ -56,7 +60,8 @@ function makeMenu(item, isSubItem){
 				            href: 'javascript:void(0)',
 				            html: item.title,
 				            'data-content': item.contentFile,
-	           				'data-keywords': item.keywords
+	           				'data-keywords': item.keywords,
+	           				class: 'nav-link'
 				        })
 			        );
         if (hasSubItem) {
