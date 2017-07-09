@@ -7,4 +7,23 @@ and open the template in the editor.
     Created on : Jun 26, 2017, 4:11:14 PM
     Author     : ajithkumars
 */
-
+.navbar-default{
+    margin-bottom: 0;
+}
+.navbar-brand{
+    padding: 3px;
+}
+.navbar-nav{
+    padding: 10px 0;
+}
+.nav > li > a {
+    padding: 7px 20px;
+}
+.sidebar{
+    height: 100vh;
+    overflow: hidden;
+    border-right: 1px solid #999;
+}
+.main-content{
+    padding: 15px;
+}

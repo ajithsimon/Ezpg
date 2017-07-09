@@ -5,10 +5,66 @@
  */
 
 
-$.ajax({url: "\topics.json", success: function (data) {
+/*$.ajax({url: "\topics.json", success: function (data) {
         var obj = JSON.parse(data);
-    }});
+    }});*/
+
+var fileUrls = {'menu': 'topics.json'};
 
 $(document).ready(function(){
-    
+    $.ajax({
+    	url: './js/'+fileUrls['menu'],
+    	dataType: 'json',
+    	success: function(data){
+    		var $menu = $("#menu");
+		    $.each(data, function (i, item) {
+		        $menu.append(
+		            makeMenu(item)
+		        );
+		    });
+    	}
+    });
 });
+
+$(document).on('click', '.mainLink, .subLinks', function(e){
+	if (typeof $(this).children('a').data('content') === 'undefined') {
+		return false;
+	}
+	var contentUrl = './js/'+$(this).children('a').data('content');
+	$.ajax({
+		url: contentUrl,
+		dataType: 'json',
+		beforeSend: function(){
+			$("#content").html("Loading....");
+		},
+		success: function(data){
+			var content = "<div class='textContent'>"+data.content.replace(/\n/g, "<br />")+"</div>";
+			if (typeof data.notes !== 'undefined') {
+				content += "<div class='notes' style='margin-top:10px;'>*"+data.notes.replace(/\n/g, "<br />")+"</div>";
+			}
+			$("#content").html(content);
+		}
+	});
+});
+
+function makeMenu(item, isSubItem){
+	var hasSubItem = (typeof item.subItems !== 'undefined') ? true : false;
+    var menuItem = $("<li>",{
+    					class: (typeof isSubItem === 'undefined') ? 'mainLink' : 'subLinks',
+    				}).append(
+				        $("<a>", {
+				            href: 'javascript:void(0)',
+				            html: item.title,
+				            'data-content': item.contentFile,
+	           				'data-keywords': item.keywords
+				        })
+			        );
+        if (hasSubItem) {
+            var subList = $("<ul>");
+            $.each(item.subItems, function (i, subItem) {
+                subList.append(makeMenu(subItem, true));
+            });
+            menuItem.append(subList);
+        }
+        return menuItem;
+}
