@@ -1,0 +1,50 @@
+[
+   {
+      "id":"1",
+      "title":"What is EzPGMS?",
+      "contentFile":"whatIsEzpgms.json",
+      "keywords":"about ezpgms"
+   },
+   {
+      "id":"2",
+      "title":"Add, Edit, Delete PG",
+      "subItems":[
+         {
+            "title":"Adding PG",
+            "contentFile":"addPG.json",
+            "keywords":"create pg"
+         },
+         {
+            "title":"Edit PG",
+            "contentFile":"editPG.json"
+         },
+         {
+            "title":"Delete PG",
+            "contentFile":"deletePG.json",
+            "keywords":"remove pg"
+         }
+      ]
+   },
+   {
+      "id":"3",
+      "title":"Monitor PG",
+      "contentFile":"monitor.json",
+      "keywords":"dashboard"
+   },
+   {
+      "id":"4",
+      "title":"Managing Occupants",
+      "subItems":[
+         {
+            "title":"Adding Occupants",
+            "contentFile":"addOccupant.json",
+            "keywords":"occupant, occupy bed"
+         },
+         {
+            "title":"Tracking Payments",
+            "contentFile":"trackPayments.json",
+            "keywords":"track, payments"
+         }
+      ]
+   }
+]
