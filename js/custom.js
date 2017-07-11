@@ -54,13 +54,15 @@ $(document).on('keyup', '#search', function(e){
 });
 
 
-$(document).on('click', '.mainLink, .subLinks', function(e){
+$(document).on('click', '.mainLink, .subLinks, .mainNode', function(e){
 	if (typeof $(this).children('a').data('content') === 'undefined') {
 		return false;
 	}
 	$('.mainLink, .subLinks').removeClass('selected');
 	var $element = $(this);
-	var contentUrl = './js/'+$element.children('a').data('content');
+	var isSubItem = ($element.attr('class') == 'subLinks') ? true : false;
+	var contentJsonFile = $element.children('a').data('content');
+	var contentUrl = './js/'+contentJsonFile;
 	$.ajax({
 		url: contentUrl,
 		dataType: 'json',
@@ -68,9 +70,18 @@ $(document).on('click', '.mainLink, .subLinks', function(e){
 			$("#content").html("Loading....");
 		},
 		success: function(data){
-			var content = "<div class='textContent'>"+data.content.replace(/\n/g, "<br />")+"</div>";
+			var content = "<div class='content-title'><h1>"+data.title+"</h1></div>";
+			content += "<div class='textContent'>"+data.content.replace(/\n/g, "<br />")+"</div>";
 			if (typeof data.notes !== 'undefined') {
 				content += "<div class='notes' style='margin-top:10px;'>*"+data.notes.replace(/\n/g, "<br />")+"</div>";
+			}
+			if (isSubItem) {
+				console.log($element.parent('ul').parent('li'));
+				$(".mainNode").html("<a href='javascript:void(0)'>"+$element.parent('ul').parent('li').children('a').text()+"</a>");
+				$(".subNode").addClass('active').html($element.children('a').text()).show();
+			}else{
+				$(".mainNode").addClass('active').html($element.children('a').text());
+				$(".subNode").hide();
 			}
 			$("#content").html(content);
 			$element.addClass('selected');
