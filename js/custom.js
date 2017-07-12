@@ -76,7 +76,6 @@ $(document).on('click', '.mainLink, .subLinks, .mainNode', function(e){
 				content += "<div class='notes' style='margin-top:10px;'>*"+data.notes.replace(/\n/g, "<br />")+"</div>";
 			}
 			if (isSubItem) {
-				console.log($element.parent('ul').parent('li'));
 				$(".mainNode").html("<a href='javascript:void(0)'>"+$element.parent('ul').parent('li').children('a').text()+"</a>");
 				$(".subNode").addClass('active').html($element.children('a').text()).show();
 			}else{
@@ -94,21 +93,34 @@ function makeMenu(item, isSubItem){
     var menuItem = $("<li>",{
     					class: (typeof isSubItem === 'undefined') ? 'mainLink' : 'subLinks',
     					'data-keywords': item.keywords
-    				}).append(
-				        $("<a>", {
-				            href: 'javascript:void(0)',
-				            html: item.title,
-				            'data-content': item.contentFile,
-	           				'data-keywords': item.keywords,
-	           				class: 'nav-link'
-				        })
+    				}).addClass((hasSubItem ? 'nav-header' : '')).append(
+				        $("<a>", makeLinkAttributes(item,hasSubItem))
 			        );
         if (hasSubItem) {
-            var subList = $("<ul>");
+            var subList = $("<ul>",{class: 'nav nav-stacked collapse', id: cleanString(item.title)});
             $.each(item.subItems, function (i, subItem) {
                 subList.append(makeMenu(subItem, true));
             });
             menuItem.append(subList);
         }
         return menuItem;
+}
+
+function makeLinkAttributes(item, hasSubItem){
+	var attributes = {
+        href: 'javascript:void(0)',
+        html: item.title,
+        'data-content': item.contentFile,
+		'data-keywords': item.keywords,
+		class: 'nav-link'
+    };
+    if (hasSubItem) {
+    	attributes['data-toggle'] = 'collapse';
+    	attributes['data-target'] = '#'+cleanString(item.title);
+    }
+    return attributes;
+}
+
+function cleanString(string){
+	return string.trim().replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g,'_').toLowerCase();
 }
