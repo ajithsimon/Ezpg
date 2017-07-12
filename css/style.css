@@ -31,9 +31,9 @@ a,a:hover,a:focus{
     padding: 0;
 }
 .sidebar{
-    height: 100vh;
+    height: 85vh;
     overflow-y: scroll;
-    border-right: 1px solid #999;
+    border-right: 2px solid #ececec;
 }
 .main-content{
     padding: 15px;
@@ -56,4 +56,9 @@ h1,.h1{
 .notes{
     color: #999;
     font-style: italic;
+}
+.footer{
+    background: #f8f8f8;
+    border-top: 2px solid #ececec;
+    padding: 10px 0;
 }
