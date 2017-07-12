@@ -62,3 +62,6 @@ h1,.h1{
     border-top: 2px solid #ececec;
     padding: 10px 0;
 }
+.footer .btn{
+    margin: 0 3px;
+}
